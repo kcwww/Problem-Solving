@@ -1,129 +1,68 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int count_cheese(int** cheese, int row, int col)
-{
+int n, m;
+int map[101][101] = { 0, };
 
-	int result = 0;
+int row[4] = { -1,1,0,0 };
+int col[4] = { 0,0,-1,1 };
 
-	for (int i = 0; i < row; i++)
-	{
-		for (int j = 0; j < col; j++)
-		{
-			if (cheese[i][j] == 1)
-				result++;
+void airOut(int ac[][101], int sero, int garo) {
+	ac[sero][garo] = 1;
+
+	for (int i = 0; i < 4; i++) {
+		int ny = sero + row[i];
+		int nx = garo + col[i];
+
+		if (ny >= 0 && ny < n && nx >= 0 && nx < m) {
+			if (map[ny][nx] == 0 && ac[ny][nx] == 0)
+				airOut(ac, ny, nx);
 		}
 	}
-	return (result);
 }
 
-void	recursive(int** cheese, int** ans, int row, int col, int r, int c)
-{
-	if (cheese[r][c] == 1)
-	{
-		ans[r][c] = 1;
-		return;
+int main(void) {
+	scanf("%d %d", &n, &m);
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++)
+			scanf("%d", &map[i][j]);
 	}
-	if (r < row - 1 && r >= 0 && ans[r][c] == 0)
-	{
-		if (cheese[r][c] == 0)
-        {
-			recursive(cheese, ans, row, col, r + 1, c);
-        }
-    }
-	if (c < col - 1 && c >= 0 && ans[r][c] == 0)
-	{
-		if (cheese[r][c] == 0)
-        {
-			recursive(cheese, ans, row, col, r, c + 1);
-        }
-	}
-    if (r > 0 && r < row && ans[r][c] == 0)
-    {
-        if (cheese[r][c] == 0)
-        {
-            recursive(cheese, ans, row, col, r - 1, c);
-        }
-    }
 
-    if (c > 0 && c < col)
-    {
-        if (cheese[r][c] == 0)
-        {
-            recursive(cheese, ans, row, col, r, c - 1);
-        }
-    }
-}
+	int time = 0;
+    int pre_rcn = 0;
 
-void	remove_cheese(int** cheese, int** ans, int row, int col)
-{
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            if (cheese[i][j] == 1 && ans[i][j] == 1)
-            {
-                cheese[i][j] = 0;
-                ans[i][j] = 0;
-            }
-        }
-    }
-}
+	while (1) {
+		int air_check[101][101] = { 0, };
+		airOut(air_check, 0, 0);
+		int remove_ch[10000][2] = { 0, };
+		int remove_ch_num = 0;
 
-void    print_ans(int **ans, int row, int col)
-{
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            printf("%d ", ans[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n\n");
-}
+		for (int i = 1; i < n - 1; i++) {
+			for (int j = 1; j < m - 1; j++) {
+				if (map[i][j] == 1) {
+					for (int d = 0; d < 4; d++) {
+						int cy = i + row[d];
+						int cx = j + col[d];
 
-int main()
-{
-	int	row = 0, col = 0, count = 1, time = 0, last = 0;
-	int** cheese;
-    int** ans;
-
-	scanf("%d %d", &row, &col);
-	cheese = (int**)malloc(sizeof(int*) * row);
-	ans = (int**)malloc(sizeof(int*) * row);
-    for (int i = 0; i < row; i++)
-    {
-		cheese[i] = (int*)malloc(sizeof(int) * col);
-        ans[i] = (int*)malloc(sizeof(int) * col);
-    }
-
-    for (int i = 0; i < row; i++)
-	{
-		for (int j = 0; j < col; j++)
-		{
-			scanf("%d", &cheese[i][j]);
-            ans[i][j] = 0;
+						if (cy >= 0 && cy < n && cx >= 0 && cx < m) {
+							if (air_check[cy][cx] == 1) {
+								remove_ch[remove_ch_num][0] = i;
+								remove_ch[remove_ch_num++][1] = j;
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
-	}
-	while (1)
-	{
-		count = count_cheese(cheese, row, col);	
-		if (count == 0)
-			break;
-		recursive(cheese, ans, row, col, 0, 0);
-        print_ans(ans,row,col);
-        remove_cheese(cheese, ans, row, col);
-		last = count;
+
+		if (remove_ch_num == 0) break;
+		pre_rcn = remove_ch_num;
+
+		for (int r = 0; r < remove_ch_num; r++)
+			map[remove_ch[r][0]][remove_ch[r][1]] = 0;
+
 		time++;
 	}
-	printf("%d\n%d\n", time, last);
-	for (int i = 0; i < col; i++)
-    {
-		free(cheese[i]);
-        free(ans[i]);
-    }
-    free(cheese);
-    free(ans);
-	return (0);
+	printf("%d\n%d", time, pre_rcn);
+	return 0;
 }
