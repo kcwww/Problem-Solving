@@ -3,6 +3,7 @@
 
 int flag = 0;
 
+// 정답 찾기
 void    dfs(int **re, int dest, int src, int num, int count)
 {
 
@@ -40,11 +41,14 @@ int main()
     for (int i = 0; i < num; i++)
         re[i] = (int *)malloc(sizeof(int) * 3);
     
+    //re[i][2] 는 방문한 그래프 0 은 미방문
     for (int i = 0; i < num; i++)
     {
         scanf("%d %d", &re[i][0], &re[i][1]);
         re[i][2] = 0;
     }
+    
+    // 목적지에 따라 
     for (int i = 0; i < num; i++)
     {
         if (re[i][0] == one || re[i][1] == one)
@@ -58,6 +62,7 @@ int main()
             break ;
         }
     }
+    
     if (flag == 0)
         printf("-1\n");
 
