@@ -1,29 +1,29 @@
 #include <stdio.h>
+long long numbers[1000001];
 
-int	check_pow(long long num, long long b)
+int main(void)
 {
-	long long a = 2;
-	while ((a * a) <= b)
-	{
-		if (num % (a * a) == 0)
+	long long max, min;
+	long long num;
+
+	int count = 0;
+	scanf("%lld %lld", &min, &max);
+	for (long long i=2; i * i <= max; i++)
 		{
-			return (0);
+			long long x = min / (i * i);
+			if (min % (i * i) != 0)
+				x++;
+			while (x * (i * i) <= max)
+				{
+					numbers[x * (i * i) - min] = 1;
+					x++;
+				}
 		}
-		a++;
-	}
-	return (1);
-}
-
-int	main()
-{
-	long long a = 0, b = 0;
-	int	count = 0;
-	scanf("%lld %lld", &a, &b);
-	for (long long i = a; i <= b; i++)
-	{
-		if (check_pow(i, b))
-			count++;
-	}
+	for (int i = 0; i <= max - min; i++)
+		{
+			if  (numbers[i] == 0)
+				count++;
+		}
 	printf("%d\n", count);
-	return (0);
+	return 0;
 }
