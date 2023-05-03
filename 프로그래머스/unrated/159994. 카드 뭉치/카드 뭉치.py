@@ -12,7 +12,5 @@ def solution(cards1, cards2, goal):
             if word != ca2[0]:
                 return ("No")
             ca2.popleft()
-        else:
-            return ("No")
     answer = 'Yes'
     return answer
