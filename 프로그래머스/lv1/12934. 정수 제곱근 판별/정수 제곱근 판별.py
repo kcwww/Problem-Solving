@@ -1,4 +1,2 @@
-import math
-
 def solution(n):
-    return math.pow(math.sqrt(n) + 1, 2) if (n % math.sqrt(n)) == 0 else -1
+    return (n**(1/2)+1)**2 if (n % (n**(1/2)) == 0) else -1
