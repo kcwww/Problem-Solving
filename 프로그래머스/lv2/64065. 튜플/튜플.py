@@ -6,21 +6,29 @@ def solution(s):
     flag = 0
     temp = ''
     for c in s:
-        if (flag == 1 and c != '}'):
-            temp += c
         if (c == '{'):
             flag = 1
+            continue
         if (c == '}'):
+            answer.append(temp)
             flag = 0
+            temp = ''
+            continue
+        
+        if (c == ',' and flag == 1):
             answer.append(temp)
             temp = ''
-    answer.sort(key=len)
-    temp = []
-    for a in answer:
-        result = list(map(int, a.split(',')))
-        for r in result:
-            if r in temp:
-                continue
-            else:
-                temp.append(r)
-    return temp
+            continue
+        elif (flag == 0):
+            continue
+        temp += c
+
+    re_dict = {}
+    for k in answer:
+        if k in re_dict:
+            re_dict[k] += 1
+        else:
+            re_dict[k] = 1
+    re_dict = sorted(re_dict.items(), key=lambda x : -x[1])
+
+    return [int(r[0]) for r in re_dict]
