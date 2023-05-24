@@ -34,13 +34,7 @@ def one_two_three(p):
         new_str += one_two_three(v)
         new_str += ')'
         u = list(u)
-        u.pop(0)
-        u.pop()
-        for idx, val in enumerate(u):
-            if val == '(':
-                u[idx] = ')'
-            else:
-                u[idx] = '('
+        u = map(lambda x : ')' if x == '(' else '(', u[1:len(u) - 1])
         u = new_str + ''.join(u)
     return u
 
