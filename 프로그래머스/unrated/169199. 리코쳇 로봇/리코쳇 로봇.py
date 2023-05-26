@@ -41,7 +41,6 @@ def solution(board):
     
     deq = deque()
     deq.append(location)
-    
 
     while deq:
         location = deq.popleft()
@@ -56,7 +55,5 @@ def solution(board):
             elif visited[mr][mc] == 1:
                 continue 
             deq.append([mr,mc,mw])
-            
-        
-            
+
     return answer
