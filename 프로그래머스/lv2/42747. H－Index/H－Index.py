@@ -1,10 +1,9 @@
 def solution(citations):
-    cit = sorted(citations)
-    n = len(citations)
-    print(cit)
-    for i in range(n):
-        print(cit[i], i, n, n-i)
-        if cit[i] >= n-i and i < cit[i]:
-            return n-i
-
-    return 0
+    answer = []
+    for h in range(max(citations) + 1):
+        a = list(map(lambda x : x >= h, citations))
+        t = a.count(True)
+        f = a.count(False)
+        if t >= h and f <= h:
+            answer.append(h)
+    return max(answer)
