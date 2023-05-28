@@ -1,5 +1,4 @@
 def solution(citations):
-    citations.sort()
     answer = []
     for h in range(max(citations) + 1):
         a = list(map(lambda x : x >= h, citations))
