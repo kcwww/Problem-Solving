@@ -74,6 +74,11 @@ def down_cluster(cave, cluster, R, C):
 
     return
 
+def init_visit(R, C, visited):
+    for i in range(R):
+        for j in range(C):
+            visited[i][j] = 0
+
 #####################################################
 R, C = map(int, sys.stdin.readline().split())
 cave = [0] * R
@@ -96,17 +101,13 @@ while stick > 0:
                 check_cluster(cave, i, j, R, C, visited, cluster)
                 if flag:
                     down_cluster(cave, cluster, R, C)
-                    for i in range(R):
-                            for j in range(C):
-                                visited[i][j] = 0
+                    init_visit(R, C, visited)
 
     if lr == 0:
         lr = 1
     elif lr == 1:
         lr = 0
     stick -= 1
-    for i in range(R):
-        for j in range(C):
-            visited[i][j] = 0
+    init_visit(R, C, visited)
 for i in range(R):
     print(''.join(cave[i]))
