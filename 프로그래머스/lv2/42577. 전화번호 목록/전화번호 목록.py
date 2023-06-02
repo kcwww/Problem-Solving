@@ -1,5 +1,4 @@
 def solution(phone_book):
-    stack = []
     answer = True
     book = {}
     phone_book.sort(key=len)
