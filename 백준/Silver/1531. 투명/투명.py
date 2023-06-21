@@ -1,7 +1,7 @@
 import sys
 
 N, M = map(int, sys.stdin.readline().split())
-coordinate = []
+
 picture = []
 for _ in range(101):
     picture.append([0] * 101)
