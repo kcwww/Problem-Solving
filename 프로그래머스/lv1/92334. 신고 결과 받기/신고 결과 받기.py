@@ -1,25 +1,34 @@
 def solution(id_list, report, k):
     answer = []
-    
-    id = {}
-    k_id = {}
-    for li in id_list:
-        id[li] = []
-        k_id[li] = 0
-    
-    for re in report:
-        from_id, to_id = re.split()
-        if to_id not in id[from_id]:
-            id[from_id].append(to_id)
-            k_id[to_id] += 1
-    
-    for i in id:
-        result = 0
-        for name in id[i]:
-            
-            if k_id[name] >= k:
-                result += 1
-        answer.append(result)
-            
-    
-    return answer
+    reports = {}
+    for i in id_list:
+        reports[i] = []
+    result = {}
+    for r in report:
+        a, b = r.split()
+        if a in reports:
+            if b in reports[a]:
+                continue
+            reports[a].append(b)
+            if b in result:
+                result[b] += 1
+            else:
+                result[b] = 1
+        else:
+            reports[a] = [b]
+            if b in result:
+                result[b] += 1
+            else:
+                result[b] = 1
+
+    for ke, v in result.items():
+        if v >= k:
+            answer.append(ke)
+    a = []
+    for i in id_list:
+        cnt = 0
+        for r in reports[i]:
+            if r in answer:
+                cnt += 1
+        a.append(cnt)
+    return a
