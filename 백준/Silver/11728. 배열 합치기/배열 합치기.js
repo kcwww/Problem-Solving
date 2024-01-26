@@ -8,13 +8,15 @@ const B = input[2].split(" ").map(v => +v);
 
 let adx = 0;
 let bdx = 0;
-const result = [];
+const result = new Array(N + M).fill(0);
+let idx = 0;
 
 while (adx < N || bdx < M) {
-  if (adx === N) result.push(B[bdx++]);
-  else if (bdx === M) result.push(A[adx++]);
-  else if (A[adx] < B[bdx]) result.push(A[adx++]);
-  else result.push(B[bdx++]);
+  if (adx === N) result[idx] = (B[bdx++]);
+  else if (bdx === M) result[idx] = (A[adx++]);
+  else if (A[adx] < B[bdx]) result[idx] = (A[adx++]);
+  else result[idx] = (B[bdx++]);
+  idx++;
 }
 
 console.log(result.join(' '));
