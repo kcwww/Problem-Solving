@@ -14,16 +14,10 @@ const solution = (k, d) => {
     
     // 반지름이 d 인 원 내부의 점의 개수 & k 의 배수 리턴
     
-    // 기울기 1 이하인 가장 큰 점 찾고 그 점만큼 * 2
-    // 기울기 1 인 점 찾기
     let answer = 0;
     
     for (let i = 0; i <= d; i++) {
-        const distance = Math.sqrt(2*i*i)
         
-        
-        
-        // 직선 아래 가장 큰점 * 2
         answer += findMax(i, d, k);
     }
     
